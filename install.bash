@@ -15,6 +15,3 @@ cd cmake-$version.$build/
 ./bootstrap
 make -j$(nproc)
 sudo make install
-
-# Install lib deps
-sudo apt-get install -y libsdl2-dev

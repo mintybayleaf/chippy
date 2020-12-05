@@ -9,14 +9,11 @@ jobs:
             - run:
                 name: Dependencies
                 command: |
-                    cd scripts
-                    chmod +x install.bash
                     sudo ./install.bash
             - run:
                 name: Build
                 command: |
-                    cmake -H. -Bbuild
-                    cmake --build build
+                    ./build.bash
             - run:
                 name: Test
                 command: |
