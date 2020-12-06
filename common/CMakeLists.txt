@@ -2,7 +2,10 @@
 
 cmake_minimum_required(VERSION 3.13.4)
 
-list(APPEND CHIPPY_COMMON_SOURCE src/loader.c)
+list(APPEND CHIPPY_COMMON_SOURCE 
+    src/rom.c
+    src/instructions.c
+)
 
 target_sources(
     ${CHIPPY_EMULATOR_TARGET}

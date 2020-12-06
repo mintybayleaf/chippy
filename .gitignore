@@ -56,3 +56,4 @@ build
 
 # VsCode
 *.code-workspace
+.vscode/
