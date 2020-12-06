@@ -1,11 +1,11 @@
 # Makefile for project commands
 
 BUILD_TYPE := Debug
-TARGET := run-emu
-GENERATOR_NAME=Unix Makefiles 
+GENERATOR_NAME := Unix Makefiles 
+INSTALL_PREFIX := /usr
 
 build:
-	cmake -H. -Bbuild -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -G$(GENERATOR_NAME)
+	cmake -H. -Bbuild -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -DCMAKE_INSTALL_PREFIX=$(INSTALL_PREFIX) -G$(GENERATOR_NAME)
 
 .PHONY: build-emu
 build-emu: build
@@ -22,6 +22,10 @@ run-emu:  build-emu
 .PHONY: run-dis
 run-dis:  build-dis
 	cmake --build build --target run-dis
+
+.PHONY: install
+install: build-dis build-emu
+	cmake --build build --target install
 
 .PHONY: clean
 clean:
