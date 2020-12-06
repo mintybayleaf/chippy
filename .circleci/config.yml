@@ -9,11 +9,15 @@ jobs:
             - run:
                 name: Dependencies
                 command: |
-                    sudo ./install.bash
+                    sudo install.bash
             - run:
                 name: Build
                 command: |
-                    ./build.bash
+                    make build
+            -run:
+                name: Install
+                command: |
+                    make install
             - run:
                 name: Test
                 command: |
