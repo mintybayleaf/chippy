@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-inline void error(const char* message) {
-    fprintf(stderr, message);
-    exit(EXIT_FAILURE);
-}
+#define error(msg, ...) do { \
+        fprintf(stderr, "\n%s:%d:  ", __FILE__, __LINE__); \
+        fprintf(stderr, msg, __VA_ARGS__); \
+    } while (0)
 
 #endif
