@@ -1,7 +1,7 @@
 # Makefile for project commands
 
 BUILD_TYPE := Debug
-GENERATOR_NAME := Unix Makefiles 
+GENERATOR_NAME := "Unix Makefiles" 
 INSTALL_PREFIX := /usr
 
 build:
@@ -11,20 +11,12 @@ build:
 build-emu: build
 	cmake --build build --target chippy-emu
 
-.PHONY: build-dis
-build-dis: build
-	cmake --build build --target chippy-dis
-
-.PHONY: run-emu
-run-emu:  build-emu
-	cmake --build build --target run-emu
-
-.PHONY: run-dis
-run-dis:  build-dis
-	cmake --build build --target run-dis
+.PHONY: run
+run:  build-emu
+	cmake --build build --target run
 
 .PHONY: install
-install: build-dis build-emu
+install: build-emu
 	cmake --build build --target install
 
 .PHONY: clean

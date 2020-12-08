@@ -5,8 +5,9 @@
 
 /* Roms are the actual programs that chip8 will run */
 typedef struct {
-    const uint8_t* memory;
+    uint8_t* memory;
     char* name;
+    uint16_t rom_size;
 } Rom;
 
 /* Create a rom on the heap */

@@ -19,13 +19,7 @@ endif()
 # Options
 option(BUILD_TESTS "Build Tests" OFF)
 
-set(CHIPPY_DISASSEMBLER_TARGET "chippy-dis")
 set(CHIPPY_EMULATOR_TARGET "chippy-emu")
-
-# Add the final targets
-# TODO Add Debugger just for fun?
-add_executable(${CHIPPY_EMULATOR_TARGET})
-add_executable(${CHIPPY_DISASSEMBLER_TARGET})
 
 
 # SDL2 Stuff
@@ -35,12 +29,14 @@ set(SDL_STATIC ON CACHE BOOL "" FORCE)
 set(SDL_SHARED OFF CACHE BOOL "" FORCE)
 add_subdirectory("${CMAKE_SOURCE_DIR}/external/sdl2")
 
+# Add the final targets
+# TODO Add Debugger just for fun?
+add_executable(${CHIPPY_EMULATOR_TARGET})
 
 # Project Stuff
 # Add subdirectories
 add_subdirectory(common)
 add_subdirectory(emulator)
-add_subdirectory(disassembler)
 
 # Maybe add tests
 if (BUILD_TESTS)
