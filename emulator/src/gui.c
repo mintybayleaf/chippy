@@ -1,17 +1,37 @@
 #include "gui.h"
+#include "error.h"
+#include <string.h>
 #include <assert.h>
 
 void InitGui(Gui* gui, const char* title, int width, int height, int twidth, int theight) {
     assert(gui);
-    SDL_Init(SDL_INIT_VIDEO);
+
+	int code = SDL_Init(SDL_INIT_VIDEO);
+	if (code < 0) {
+		char buffer[500];
+		sprintf(buffer, "SDL_Init Failed with %d and message %s", code, SDL_GetError());
+		error(buffer);
+	}
     gui->window = SDL_CreateWindow(title, 0, 0, width, height, SDL_WINDOW_SHOWN);
+
+	if (!gui->window) {
+		error("SDL_CreateWindow Failed");
+	}
+
     gui->renderer = SDL_CreateRenderer(gui->window, -1, SDL_RENDERER_ACCELERATED);
+	if (!gui->renderer) {
+		error("SDL_CreateRenderer Failed");
+	}
     gui->texture = SDL_CreateTexture(
 			gui->renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, twidth, theight);
+	if (!gui->texture) {
+		error("SDL_CreateTexture Failed");
+	}
 
 }
 
 void DestroyGui(Gui* gui) {
+	assert(gui);
     SDL_DestroyTexture(gui->texture);
     SDL_DestroyRenderer(gui->renderer);
     SDL_DestroyWindow(gui->window);
@@ -19,6 +39,7 @@ void DestroyGui(Gui* gui) {
 }
 
 void UpdateGui(Gui* gui, void const* buffer, int pitch) {
+	assert(gui);
     SDL_UpdateTexture(gui->texture, NULL, buffer, pitch);
     SDL_RenderClear(gui->renderer);
     SDL_RenderCopy(gui->renderer, gui->texture, NULL, NULL);

@@ -19,19 +19,15 @@ endif()
 # Options
 option(BUILD_TESTS "Build Tests" OFF)
 option(USE_SYSTEM_SDL2 "Use system SDL2 libs instead" OFF)
-option(USE_SDL2_STATIC "Use SDL2 Static" OFF)
 
 set(CHIPPY_EMULATOR_TARGET "chippy")
 
 
-if (NOT USE_SYSTEM_SDL2)
-    # SDL2 Stuff
-    # I added this to the top level instead of emulator/CMakeLists.txt so the generated build
-    # paths would be the same
+if (UNIX OR APPLE)
+    # Just build from source, use static lib
     add_subdirectory("${CMAKE_SOURCE_DIR}/external/sdl2")
-else()
-    find_package(SDL2 REQUIRED)
 endif()
+
 
 
 # Add the final targets

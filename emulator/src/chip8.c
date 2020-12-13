@@ -239,7 +239,7 @@ static void OP_8XY5(Chip8* chip, uint16_t opcode) {
 // Set vx = vx shr 1
 static void OP_8XY6(Chip8* chip, uint16_t opcode) {
     uint8_t vx = (opcode & 0x0F00u) >> 8u;
-
+    chip->registers[0xF] = (chip->registers[vx] & 0x1u);
     chip->registers[vx] >>= 1;
 }
 
@@ -446,7 +446,7 @@ static void OP_FX18(Chip8* chip, uint16_t opcode) {
 // Set I = I + Vx
 static void OP_FX1E(Chip8* chip, uint16_t opcode) {
     uint8_t vx = (opcode & 0x0F00u) >> 8u;
-    chip->index = chip->registers[vx];
+    chip->index += chip->registers[vx];
 }
 
 // Set I = location of sprite for digit Vx
@@ -470,7 +470,7 @@ static void OP_FX33(Chip8* chip, uint16_t opcode) {
 // Store registers V0 through Vx in memory starting at location I
 static void OP_FX55(Chip8* chip, uint16_t opcode) {
     uint8_t vx = (opcode & 0x0F00u) >> 8u;
-    for(uint8_t i = 0; i < vx; ++i) {
+    for(uint8_t i = 0; i <= vx; ++i) {
         chip->memory[chip->index + i] = chip->registers[i];
     }
 }
@@ -478,7 +478,7 @@ static void OP_FX55(Chip8* chip, uint16_t opcode) {
 // Read registers V0 through Vx from memory starting at location I
 static void OP_FX65(Chip8* chip, uint16_t opcode) {
     uint8_t vx = (opcode & 0x0F00u) >> 8u;
-    for(uint8_t i = 0; i < vx; ++i) {
+    for(uint8_t i = 0; i <= vx; ++i) {
         chip->registers[i] = chip->memory[chip->index + i];
     }
 }
@@ -495,9 +495,12 @@ void Chip8Cycle(Chip8* chip) {
     // Inc PC before executing
     chip->pc += 2;
 
+    char buffer[500];
+   
+
     switch(expression) {
         case 0x0:
-            switch(expression & 0x000Fu) {
+            switch(opcode & 0x000Fu) {
                  case 0x0:
                     OP_00E0(chip);
                     break;
@@ -505,7 +508,8 @@ void Chip8Cycle(Chip8* chip) {
                     OP_00EE(chip);
                     break;
                 default:
-                    error("Invalid Opcode: %u");
+                    sprintf(buffer, "Invalid Opcode Table 0 0x%x", opcode);
+                    error(buffer);
                     break;
             }
             break;
@@ -531,7 +535,7 @@ void Chip8Cycle(Chip8* chip) {
             OP_7XKK(chip, opcode);
             break;
         case 0x8:
-            switch(expression & 0x000Fu) {
+            switch(opcode & 0x000Fu) {
                  case 0x0:
                     OP_8XY0(chip, opcode);
                     break;
@@ -560,7 +564,8 @@ void Chip8Cycle(Chip8* chip) {
                     OP_8XYE(chip, opcode);
                     break;
                 default:
-                    error("Invalid Opcode: %u");
+                    sprintf(buffer, "Invalid Opcode Table 8 0x%x", opcode);
+                    error(buffer);
                     break;
             }
            break;
@@ -580,7 +585,7 @@ void Chip8Cycle(Chip8* chip) {
             OP_DXYN(chip, opcode);
             break;
         case 0xE:
-            switch(expression & 0x000Fu) {
+            switch(opcode & 0x000Fu) {
                  case 0x1:
                     OP_EXA1(chip, opcode);
                     break;
@@ -588,12 +593,13 @@ void Chip8Cycle(Chip8* chip) {
                     OP_EX9E(chip, opcode);
                     break;
                 default:
-                    error("Invalid Opcode: %u");
+                    sprintf(buffer, "Invalid Opcode Table E 0x%x", opcode);
+                    error(buffer);
                     break;
             }
             break;
         case 0xF:
-            switch(expression & 0x00FFu) {
+            switch(opcode & 0x00FFu) {
                  case 0x07:
                     OP_FX07(chip, opcode);
                     break;
@@ -622,13 +628,15 @@ void Chip8Cycle(Chip8* chip) {
                     OP_FX65(chip, opcode);
                     break;
                 default:
-                    error("Invalid Opcode: %u");
+                    sprintf(buffer, "Invalid Opcode Table F 0x%x", opcode);
+                    error(buffer);
                     break;
             }
            break;
             break;
         default:
-            error("Invalid Opcode: %u");
+            sprintf(buffer, "Invalid Opcode 0x%x", opcode);
+            error(buffer);
             break;
     }
 

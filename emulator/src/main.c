@@ -8,7 +8,6 @@
 #include "chip8.h"
 
 // Hack Try to include the system headers first
-#include <SDL2/SDL.h>
 #include "SDL.h"
 
 int main(int argc, char** argv) {
@@ -33,7 +32,7 @@ int main(int argc, char** argv) {
 	InitGui(&gui, rom->name, CHIP8_VIDEO_WIDTH * scale, CHIP8_VIDEO_HEIGHT * scale, CHIP8_VIDEO_WIDTH, CHIP8_VIDEO_HEIGHT);
 
 	bool quit = false;
-	int videopitch = sizeof(chip8.video[0] * CHIP8_VIDEO_WIDTH);
+	int videopitch = sizeof(chip8.video[0]) * CHIP8_VIDEO_WIDTH;
 
 	clock_t last_time = clock();
 

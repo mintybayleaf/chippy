@@ -10,13 +10,14 @@ list(APPEND CHIPPY_EMULATOR_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/error.c"
 )
 
-if (NOT USE_SYSTEM_SDL2)
+if (UNIX OR APPLE)
     # SDL2 Specific
     target_include_directories(${CHIPPY_EMULATOR_TARGET} PRIVATE "${CMAKE_SOURCE_DIR}/external/sdl2/include")
     target_link_libraries(${CHIPPY_EMULATOR_TARGET} PRIVATE SDL2main SDL2-static) 
 else()
-    target_include_directories(${CHIPPY_EMULATOR_TARGET} PRIVATE ${SDL2_INCLUDE_DIRS})
-    target_link_libraries(${CHIPPY_EMULATOR_TARGET} PRIVATE ${SDL2_LIBRARIES}) 
+    target_include_directories(${CHIPPY_EMULATOR_TARGET} PRIVATE "${CMAKE_SOURCE_DIR}/external/sdl2-windows/include")
+    link_directories("${CMAKE_SOURCE_DIR}/external/sdl2-windows/include/lib/x64")
+    target_link_libraries(${CHIPPY_EMULATOR_TARGET} PRIVATE SDL2) 
 endif()
 
 target_include_directories(
@@ -33,7 +34,7 @@ target_sources(
 if(MSVC)
     target_compile_options(
         ${CHIPPY_EMULATOR_TARGET}
-        PRIVATE /W4 /WX
+        PRIVATE /W4
         $<$<CONFIG:RELEASE>:/O2>
     )
 else()
@@ -43,7 +44,6 @@ else()
         -Wextra
         -pedantic
         -Werror
-        -Wswitch-default
         -Wswitch-enum
         -Wcast-align
         -Wpointer-arith

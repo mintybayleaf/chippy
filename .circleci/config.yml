@@ -9,7 +9,7 @@ jobs:
             - run:
                 name: Dependencies
                 command: |
-                    sudo install.bash
+                    sudo ./scripts/install.bash
             - run:
                 name: Build
                 command: |

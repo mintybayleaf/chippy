@@ -5,12 +5,13 @@
 #include <stdlib.h> // Free
 
 Rom* LoadRom(const char* filepath) {
-    FILE* file = fopen(filepath, "a+b");
+    FILE* file = fopen(filepath, "r+b");
 
     if (!file) {
         return NULL;
     }
 
+    fseek(file, 0, SEEK_END);
     size_t filesize = ftell(file);
 
     Rom* rom = (Rom*)malloc(sizeof(Rom));

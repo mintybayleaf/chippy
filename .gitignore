@@ -53,6 +53,8 @@ dkms.conf
 
 # CMake
 build
+CMakeCache.txt
+CMakeFiles
 
 # VsCode
 *.code-workspace
