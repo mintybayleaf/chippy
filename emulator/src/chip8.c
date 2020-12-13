@@ -50,7 +50,7 @@ void Chip8Init(Chip8* chip) {
 
 void Chip8LoadRom(Chip8* chip, Rom* rom) {
     if (rom->rom_size > (CHIP8_MEMORY_SIZE - START_ADDRESS)) {
-        error("[ERRPR] ROM is too big %u", rom->rom_size);
+        error("[ERRPR] ROM is too big");
     }
     memcpy(&chip->memory[START_ADDRESS], rom->memory, rom->rom_size);
 }
@@ -505,7 +505,7 @@ void Chip8Cycle(Chip8* chip) {
                     OP_00EE(chip);
                     break;
                 default:
-                    error("Invalid Opcode: %u", opcode);
+                    error("Invalid Opcode: %u");
                     break;
             }
             break;
@@ -560,7 +560,7 @@ void Chip8Cycle(Chip8* chip) {
                     OP_8XYE(chip, opcode);
                     break;
                 default:
-                    error("Invalid Opcode: %u", opcode);
+                    error("Invalid Opcode: %u");
                     break;
             }
            break;
@@ -588,7 +588,7 @@ void Chip8Cycle(Chip8* chip) {
                     OP_EX9E(chip, opcode);
                     break;
                 default:
-                    error("Invalid Opcode: %u", opcode);
+                    error("Invalid Opcode: %u");
                     break;
             }
             break;
@@ -622,13 +622,13 @@ void Chip8Cycle(Chip8* chip) {
                     OP_FX65(chip, opcode);
                     break;
                 default:
-                    error("Invalid Opcode: %u", opcode);
+                    error("Invalid Opcode: %u");
                     break;
             }
            break;
             break;
         default:
-            error("Invalid Opcode: %u", opcode);
+            error("Invalid Opcode: %u");
             break;
     }
 

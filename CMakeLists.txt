@@ -18,16 +18,21 @@ endif()
 
 # Options
 option(BUILD_TESTS "Build Tests" OFF)
+option(USE_SYSTEM_SDL2 "Use system SDL2 libs instead" OFF)
+option(USE_SDL2_STATIC "Use SDL2 Static" OFF)
 
-set(CHIPPY_EMULATOR_TARGET "chippy-emu")
+set(CHIPPY_EMULATOR_TARGET "chippy")
 
 
-# SDL2 Stuff
-# I added this to the top level instead of emulator/CMakeLists.txt so the generated build
-# paths would be the same
-set(SDL_STATIC ON CACHE BOOL "" FORCE)
-set(SDL_SHARED OFF CACHE BOOL "" FORCE)
-add_subdirectory("${CMAKE_SOURCE_DIR}/external/sdl2")
+if (NOT USE_SYSTEM_SDL2)
+    # SDL2 Stuff
+    # I added this to the top level instead of emulator/CMakeLists.txt so the generated build
+    # paths would be the same
+    add_subdirectory("${CMAKE_SOURCE_DIR}/external/sdl2")
+else()
+    find_package(SDL2 REQUIRED)
+endif()
+
 
 # Add the final targets
 # TODO Add Debugger just for fun?
@@ -35,7 +40,6 @@ add_executable(${CHIPPY_EMULATOR_TARGET})
 
 # Project Stuff
 # Add subdirectories
-add_subdirectory(common)
 add_subdirectory(emulator)
 
 # Maybe add tests

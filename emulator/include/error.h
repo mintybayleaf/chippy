@@ -4,10 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define error(msg, ...) \
-    do { \
-        fprintf(stderr, "\n%s:%d:  ", __FILE__, __LINE__); \
-        fprintf(stderr, msg, __VA_ARGS__); \
-    } while (0)
+void error(const char* msg);
 
 #endif

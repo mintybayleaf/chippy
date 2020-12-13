@@ -1,5 +1,3 @@
-#include <SDL2/SDL.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -9,9 +7,13 @@
 #include "gui.h"
 #include "chip8.h"
 
+// Hack Try to include the system headers first
+#include <SDL2/SDL.h>
+#include "SDL.h"
+
 int main(int argc, char** argv) {
     if (argc != 4) {
-		error("Usage: chippy <scale> <delay> <rom>\n [ERROR] %s", "Invalid Args");
+		error("Usage: chippy <scale> <delay> <rom>");
 	}
 
 	int scale = atoi(argv[1]);
