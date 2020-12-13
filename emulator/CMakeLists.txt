@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.13.4)
 list(APPEND CHIPPY_EMULATOR_SOURCES 
     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/chip8.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/gui.c"
 )
 
 # SDL2 Specific

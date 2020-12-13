@@ -2,32 +2,55 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
+#include "error.h"
+#include "rom.h"
+#include "gui.h"
+#include "chip8.h"
 
-int main() {
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-		fprintf(stderr, "SDL_Init Error: %s\n", SDL_GetError());
-		return EXIT_FAILURE;
+int main(int argc, char** argv) {
+    if (argc != 4) {
+		error("Usage: chippy <scale> <delay> <rom>\n [ERROR] %s", "Invalid Args");
 	}
 
-	SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, 620, 387, SDL_WINDOW_SHOWN);
-	if (win == NULL) {
-		fprintf(stderr, "SDL_CreateWindow Error: %s\n", SDL_GetError());
-		return EXIT_FAILURE;
-	}
+	int scale = atoi(argv[1]);
+	int delay = atoi(argv[2]);
+	char const* romname = argv[3];
 
-	SDL_Renderer *ren = SDL_CreateRenderer(win, -1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (ren == NULL) {
-		fprintf(stderr, "SDL_CreateRenderer Error: %s\n", SDL_GetError());
-		if (win != NULL) {
-			SDL_DestroyWindow(win);
+	// Rom
+	Rom* rom = LoadRom(romname);
+
+	// Chip8
+	Chip8 chip8;
+	Chip8Init(&chip8);
+	Chip8LoadRom(&chip8, rom);
+
+	// Gui
+	Gui gui;
+	InitGui(&gui, rom->name, CHIP8_VIDEO_WIDTH * scale, CHIP8_VIDEO_HEIGHT * scale, CHIP8_VIDEO_WIDTH, CHIP8_VIDEO_HEIGHT);
+
+	bool quit = false;
+	int videopitch = sizeof(chip8.video[0] * CHIP8_VIDEO_WIDTH);
+
+	clock_t last_time = clock();
+
+	// Game Loop
+	while (!quit) {
+		quit = ProcessInput(chip8.keypad);
+
+		clock_t current_time = clock();
+		float delta_time = (float)((current_time - last_time ) * 1000) / CLOCKS_PER_SEC;
+
+		if (delta_time > delay) {
+			last_time = current_time;
+			Chip8Cycle(&chip8);
+			UpdateGui(&gui, chip8.video, videopitch);
 		}
-		SDL_Quit();
-		return EXIT_FAILURE;
+		
 	}
 
-	SDL_DestroyRenderer(ren);
-	SDL_DestroyWindow(win);
-	SDL_Quit();
-
+	DestroyRom(&rom);
+	DestroyGui(&gui);
 	return EXIT_SUCCESS;
 }
