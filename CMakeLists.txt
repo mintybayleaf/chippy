@@ -25,7 +25,7 @@ set(CHIPPY_EMULATOR_TARGET "chippy")
 
 if (UNIX OR APPLE)
     # Just build from source, use static lib
-    add_subdirectory("${CMAKE_SOURCE_DIR}/external/sdl2")
+    add_subdirectory("${CMAKE_SOURCE_DIR}/external/SDL2")
 endif()
 
 

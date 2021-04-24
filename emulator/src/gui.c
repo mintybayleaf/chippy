@@ -46,7 +46,7 @@ void UpdateGui(Gui* gui, void const* buffer, int pitch) {
     SDL_RenderPresent(gui->renderer);
 }
 
-bool ProcessInput(uint8_t* keys) 
+bool ProcessInput(uint8_t* keys)
 {
 		bool quit = false;
 
@@ -242,7 +242,7 @@ bool ProcessInput(uint8_t* keys)
                         default:
                             break;
 					}
-                    
+
 				} break;
 
                 default:
@@ -252,3 +252,4 @@ bool ProcessInput(uint8_t* keys)
 
 		return quit;
 	}
+

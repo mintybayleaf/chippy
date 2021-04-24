@@ -16,3 +16,4 @@ void UpdateGui(Gui* gui, void const* buffer, int pitch);
 bool ProcessInput(uint8_t* keys);
 
 #endif
+

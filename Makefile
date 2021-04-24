@@ -1,7 +1,7 @@
 # Makefile for project commands
 
 BUILD_TYPE := Debug
-GENERATOR_NAME := "Unix Makefiles" 
+GENERATOR_NAME := "Unix Makefiles"
 INSTALL_PREFIX := /usr
 
 
@@ -15,9 +15,13 @@ gen:
 build: gen
 	cmake --build build --target chippy
 
-.PHONY: run
-run: build
-	cmake --build build --target run
+.PHONY: opcode_test
+opcode_test: build
+	./build/bin/chippy 10 1 ./roms/BC_test.ch8
+
+.PHONY: tetris
+tetris: build
+	./build/bin/chippy 10 3 ./roms/Tetris.ch8
 
 .PHONY: install
 install: build

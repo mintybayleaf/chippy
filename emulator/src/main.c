@@ -48,10 +48,11 @@ int main(int argc, char** argv) {
 			Chip8Cycle(&chip8);
 			UpdateGui(&gui, chip8.video, videopitch);
 		}
-		
+
 	}
 
 	DestroyRom(&rom);
 	DestroyGui(&gui);
 	return EXIT_SUCCESS;
 }
+

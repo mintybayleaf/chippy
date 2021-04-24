@@ -34,3 +34,4 @@ void Chip8LoadRom(Chip8* chip, Rom* rom);
 void Chip8Cycle(Chip8* chip);
 
 #endif
+

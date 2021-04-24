@@ -17,3 +17,4 @@ Rom* LoadRom(const char* filepath);
 void DestroyRom(Rom** rom);
 
 #endif
+

@@ -22,7 +22,7 @@ Rom* LoadRom(const char* filepath) {
 
     // Read data into Rom
     rom->memory = (uint8_t*)malloc(filesize);
-    
+
     // Read the file into rom
     fseek(file, 0, SEEK_SET);
     fread(rom->memory, sizeof(uint8_t), filesize, file);
@@ -72,3 +72,4 @@ void DestroyRom(Rom** rom) {
         *rom = NULL;
     }
 }
+
