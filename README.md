@@ -27,6 +27,7 @@ make USE_SYSTEM_SDL2=ON
 
 Using SDL2 in subdirectory build (Unix or OSX)
 ```bash
+git submodule update --init --recursive
 make
 ```
 
