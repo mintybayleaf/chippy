@@ -2,3 +2,6 @@
 	path = external/sdl2
 	url = https://github.com/davidsiaw/SDL2
 	branch = master
+[submodule "external/SDL"]
+	path = external/SDL
+	url = git@github.com:SDL-mirror/SDL.git
