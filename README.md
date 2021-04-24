@@ -46,7 +46,7 @@ make opcode_test
 - [x] Add SDL2 Dependency
 - [x] Implement Display
 - [x] Setup CMakeLists.txt build
-- [ ] Implement Soundj
+- [ ] Implement Sound
 
 ## Broken
 
